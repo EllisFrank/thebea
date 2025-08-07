@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Brand Expert Adonis</title>
+    <title>Brand Expert Adonis | Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #e63946;
             --primary-dark: #c1121f;
-            --dark: #121212;
+            --dark: #0A0A0A; /* Darkened to match logo */
             --light: #f5f5f5;
             --light-gray: #f0f0f0;
             --medium-gray: #cccccc;
@@ -19,6 +19,9 @@
             --warning: #FF9800;
             --danger: #F44336;
             --sidebar-width: 250px;
+            --teal: #20c997;
+            --purple: #6f42c1;
+            --cyan: #17a2b8;
         }
 
         * {
@@ -47,21 +50,24 @@
             top: 0;
             transition: all 0.3s ease;
             z-index: 1000;
+            overflow-y: auto;
         }
 
+        /* Improved logo styling to blend with sidebar */
         .logo {
             padding: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            background: var(--dark);
         }
 
         .logo img {
             height: 80px;
             margin-bottom: 10px;
             border-radius: 10px;
+            background: var(--dark);
         }
 
         .logo h1 {
@@ -182,11 +188,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .section-title h2 {
             font-size: 1.8rem;
             color: var(--dark-gray);
+            flex-grow: 1;
         }
 
         .btn {
@@ -201,6 +210,7 @@
             cursor: pointer;
             transition: all 0.3s;
             font-size: 0.95rem;
+            white-space: nowrap;
         }
 
         .btn:hover {
@@ -223,6 +233,18 @@
         .btn-danger {
             background: var(--danger);
         }
+        
+        .btn-teal {
+            background: var(--teal);
+        }
+        
+        .btn-purple {
+            background: var(--purple);
+        }
+        
+        .btn-cyan {
+            background: var(--cyan);
+        }
 
         /* Table Styles */
         .table-container {
@@ -230,11 +252,13 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             overflow: hidden;
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 600px;
         }
 
         th, td {
@@ -287,6 +311,9 @@
             cursor: pointer;
             font-size: 0.85rem;
             margin-right: 0.3rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* Form Styles */
@@ -306,11 +333,13 @@
             display: flex;
             gap: 1.5rem;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .form-row .form-group {
             flex: 1;
             margin-bottom: 0;
+            min-width: 250px;
         }
 
         .form-group label {
@@ -336,6 +365,7 @@
         .form-group select:focus {
             border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
         }
 
         .form-group textarea {
@@ -357,6 +387,8 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             padding: 1.5rem;
             transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
@@ -382,6 +414,10 @@
             font-weight: 700;
         }
 
+        .card-body {
+            flex-grow: 1;
+        }
+        
         .card-body ul {
             list-style: none;
             margin-bottom: 1.5rem;
@@ -397,12 +433,15 @@
             color: var(--success);
             margin-right: 0.7rem;
             margin-top: 0.3rem;
+            min-width: 16px;
         }
 
         .card-footer {
             display: flex;
             justify-content: flex-end;
             gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-gray);
         }
 
         /* Stats Cards */
@@ -441,7 +480,6 @@
         .stats-card:nth-child(1) .stats-icon { background: rgba(230, 57, 70, 0.1); color: var(--primary); }
         .stats-card:nth-child(2) .stats-icon { background: rgba(76, 175, 80, 0.1); color: var(--success); }
         .stats-card:nth-child(3) .stats-icon { background: rgba(33, 150, 243, 0.1); color: #2196F3; }
-        .stats-card:nth-child(4) .stats-icon { background: rgba(255, 152, 0, 0.1); color: var(--warning); }
 
         .stats-info h3 {
             font-size: 1.2rem;
@@ -483,6 +521,80 @@
 
         .toast-info {
             background: var(--primary);
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 0.7rem 1.5rem;
+            background: var(--light);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .merch-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .merch-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .merch-image {
+            height: 180px;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--medium-gray);
+        }
+        
+        .merch-info {
+            padding: 1.5rem;
+        }
+        
+        .merch-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .merch-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
         }
 
         /* Responsive */
@@ -542,7 +654,11 @@
                 gap: 0;
             }
             
-            .card-grid {
+            .card-grid, .merch-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -576,6 +692,10 @@
                 justify-content: center;
                 cursor: pointer;
             }
+            
+            table {
+                min-width: 100%;
+            }
         }
 
         .mobile-menu-btn {
@@ -592,7 +712,7 @@
         <i class="fas fa-bars"></i>
     </div>
 
-    <!-- Sidebar -->
+    <!-- Sidebar - Logo now blends seamlessly with the background -->
     <div class="sidebar" id="sidebar">
         <div class="logo">
             <img src="https://i.ibb.co/j9cXGwcq/Whats-App-Image-2025-07-30-at-9-03-13-PM.jpg" alt="Brand Expert Logo">
@@ -604,6 +724,10 @@
             <li><a href="#" data-target="bookings"><i class="fas fa-calendar-check"></i> <span>Bookings</span></a></li>
             <li><a href="#" data-target="events"><i class="fas fa-calendar-alt"></i> <span>Events</span></a></li>
             <li><a href="#" data-target="packages"><i class="fas fa-box-open"></i> <span>Advertising Packages</span></a></li>
+            <li><a href="#" data-target="businesses"><i class="fas fa-building"></i> <span>Featured Businesses</span></a></li>
+            <li><a href="#" data-target="services"><i class="fas fa-concierge-bell"></i> <span>Our Services</span></a></li>
+            <li><a href="#" data-target="initiated"><i class="fas fa-rocket"></i> <span>Initiated Events</span></a></li>
+            <li><a href="#" data-target="merchandise"><i class="fas fa-tshirt"></i> <span>Merchandise</span></a></li>
             <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
         </ul>
     </div>
@@ -641,7 +765,7 @@
                         </div>
                         <div class="stats-info">
                             <h3>Bookings</h3>
-                            <p id="bookingsCount">Loading...</p>
+                            <p id="bookingsCount">24</p>
                         </div>
                     </div>
                     
@@ -651,7 +775,7 @@
                         </div>
                         <div class="stats-info">
                             <h3>Events</h3>
-                            <p id="eventsCount">Loading...</p>
+                            <p id="eventsCount">8</p>
                         </div>
                     </div>
                     
@@ -664,14 +788,47 @@
                             <p>5 Active Packages</p>
                         </div>
                     </div>
-                    
-                    <div class="stats-card">
-                        <div class="stats-icon">
-                            <i class="fas fa-dollar-sign"></i>
+                </div>
+                
+                <div class="section-title">
+                    <h2>Quick Actions</h2>
+                </div>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-plus-circle"></i> Add New</h3>
                         </div>
-                        <div class="stats-info">
-                            <h3></h3>
-                            <p>$24,500 </p>
+                        <div class="card-body">
+                            <p>Quickly add new content to your dashboard</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-teal" data-target="packages">Add Package</button>
+                            <button class="btn btn-purple" data-target="businesses">Add Business</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-line"></i> Analytics</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>View your business performance metrics</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-cyan">View Reports</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bell"></i> Notifications</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>You have 3 pending actions to review</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn">View Alerts</button>
                         </div>
                     </div>
                 </div>
@@ -681,6 +838,10 @@
             <div id="bookings" class="content-section">
                 <div class="section-title">
                     <h2>Event Bookings</h2>
+                    <div>
+                        <button class="btn btn-secondary"><i class="fas fa-download"></i> Export</button>
+                        <button class="btn"><i class="fas fa-filter"></i> Filters</button>
+                    </div>
                 </div>
                 
                 <div class="table-container">
@@ -774,10 +935,157 @@
             <div id="packages" class="content-section">
                 <div class="section-title">
                     <h2>Advertising Packages</h2>
+                    <button class="btn" id="addPackageBtn"><i class="fas fa-plus"></i> Add Package</button>
                 </div>
                 
-                <div class="card-grid">
+                <div class="form-container" id="packageFormContainer" style="display: none;">
+                    <form id="packageForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="packageName">Package Name*</label>
+                                <input type="text" id="packageName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="packagePrice">Price*</label>
+                                <input type="text" id="packagePrice" placeholder="$299.00" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="packageDuration">Duration*</label>
+                                <input type="text" id="packageDuration" placeholder="1 month" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="packageType">Type*</label>
+                                <select id="packageType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="social">Social Media</option>
+                                    <option value="print">Print Media</option>
+                                    <option value="digital">Digital Marketing</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="packageDescription">Description*</label>
+                            <textarea id="packageDescription" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="packageFeatures">Features (one per line)*</label>
+                            <textarea id="packageFeatures" placeholder="Feature 1&#10;Feature 2&#10;Feature 3" required></textarea>
+                        </div>
+                        
+                        <input type="hidden" id="packageId">
+                        
+                        <div class="form-group" style="text-align: right;">
+                            <button type="button" class="btn btn-secondary" id="cancelPackageBtn">Cancel</button>
+                            <button type="submit" class="btn">Save Package</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="card-grid" id="packagesGrid">
                     <!-- Packages will be loaded dynamically -->
+                </div>
+            </div>
+            
+            <!-- Featured Businesses Section -->
+            <div id="businesses" class="content-section">
+                <div class="section-title">
+                    <h2>Featured Businesses</h2>
+                    <button class="btn" id="addBusinessBtn"><i class="fas fa-plus"></i> Add Business</button>
+                </div>
+                
+                <div class="card-grid" id="businessesGrid">
+                    <!-- Businesses will be loaded dynamically -->
+                </div>
+            </div>
+            
+            <!-- Our Services Section -->
+            <div id="services" class="content-section">
+                <div class="section-title">
+                    <h2>Our Services</h2>
+                    <button class="btn" id="addServiceBtn"><i class="fas fa-plus"></i> Add Service</button>
+                </div>
+                
+                <div class="card-grid" id="servicesGrid">
+                    <!-- Services will be loaded dynamically -->
+                </div>
+            </div>
+            
+            <!-- Initiated Events Section -->
+            <div id="initiated" class="content-section">
+                <div class="section-title">
+                    <h2>Initiated Events</h2>
+                    <button class="btn" id="addInitiatedBtn"><i class="fas fa-plus"></i> Add Event</button>
+                </div>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="upcoming">Upcoming</div>
+                    <div class="tab" data-tab="past">Past Events</div>
+                    <div class="tab" data-tab="draft">Drafts</div>
+                </div>
+                
+                <div class="tab-content active" id="upcomingEvents">
+                    <div class="card-grid" id="initiatedEventsGrid">
+                        <!-- Initiated events will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Merchandise Section -->
+            <div id="merchandise" class="content-section">
+                <div class="section-title">
+                    <h2>Merchandise</h2>
+                    <button class="btn" id="addMerchBtn"><i class="fas fa-plus"></i> Add Product</button>
+                </div>
+                
+                <div class="form-container" id="merchFormContainer" style="display: none;">
+                    <form id="merchForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="merchName">Product Name*</label>
+                                <input type="text" id="merchName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="merchPrice">Price*</label>
+                                <input type="text" id="merchPrice" placeholder="$24.99" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="merchImage">Image URL</label>
+                                <input type="url" id="merchImage" placeholder="https://example.com/image.jpg">
+                            </div>
+                            <div class="form-group">
+                                <label for="merchCategory">Category</label>
+                                <select id="merchCategory">
+                                    <option value="clothing">Clothing</option>
+                                    <option value="accessories">Accessories</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="merchDescription">Description*</label>
+                            <textarea id="merchDescription" required></textarea>
+                        </div>
+                        
+                        <input type="hidden" id="merchId">
+                        
+                        <div class="form-group" style="text-align: right;">
+                            <button type="button" class="btn btn-secondary" id="cancelMerchBtn">Cancel</button>
+                            <button type="submit" class="btn">Save Product</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="merch-grid" id="merchGrid">
+                    <!-- Merchandise will be loaded dynamically -->
                 </div>
             </div>
         </div>
@@ -808,19 +1116,34 @@
         const toast = document.getElementById('toast');
         const eventsTableBody = document.getElementById('eventsTableBody');
         const bookingsTableBody = document.getElementById('bookingsTableBody');
+        const packagesGrid = document.getElementById('packagesGrid');
+        const businessesGrid = document.getElementById('businessesGrid');
+        const servicesGrid = document.getElementById('servicesGrid');
+        const initiatedEventsGrid = document.getElementById('initiatedEventsGrid');
+        const merchGrid = document.getElementById('merchGrid');
         const eventForm = document.getElementById('eventForm');
+        const packageForm = document.getElementById('packageForm');
+        const merchForm = document.getElementById('merchForm');
         const eventsCount = document.getElementById('eventsCount');
         const bookingsCount = document.getElementById('bookingsCount');
         const logoutBtn = document.getElementById('logoutBtn');
         const addEventBtn = document.getElementById('addEventBtn');
         const cancelEventBtn = document.getElementById('cancelEventBtn');
         const eventFormContainer = document.getElementById('eventFormContainer');
+        const addPackageBtn = document.getElementById('addPackageBtn');
+        const cancelPackageBtn = document.getElementById('cancelPackageBtn');
+        const packageFormContainer = document.getElementById('packageFormContainer');
+        const addMerchBtn = document.getElementById('addMerchBtn');
+        const cancelMerchBtn = document.getElementById('cancelMerchBtn');
+        const merchFormContainer = document.getElementById('merchFormContainer');
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const sidebar = document.getElementById('sidebar');
         
         // State variables
         let currentUser = null;
         let editingEventId = null;
+        let editingPackageId = null;
+        let editingMerchId = null;
 
         // Show toast notification
         function showToast(message, type) {
@@ -845,6 +1168,11 @@
                 currentUser = user;
                 loadEvents();
                 loadBookings();
+                loadPackages();
+                loadBusinesses();
+                loadServices();
+                loadInitiatedEvents();
+                loadMerchandise();
                 updateDashboardStats();
             });
         }
@@ -853,7 +1181,6 @@
         function loadEvents() {
             db.collection("events").get().then(querySnapshot => {
                 eventsTableBody.innerHTML = '';
-                eventsCount.textContent = `${querySnapshot.size} Events`;
                 
                 if (querySnapshot.empty) {
                     eventsTableBody.innerHTML = `
@@ -971,6 +1298,231 @@
             }
         }
 
+        // Load packages from Firebase
+        function loadPackages() {
+            db.collection("packages").get().then(querySnapshot => {
+                packagesGrid.innerHTML = '';
+                
+                if (querySnapshot.empty) {
+                    packagesGrid.innerHTML = '<p>No packages found.</p>';
+                    return;
+                }
+                
+                querySnapshot.forEach(doc => {
+                    const pkg = doc.data();
+                    const features = pkg.features ? pkg.features.split('\n').map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('') : '';
+                    
+                    const packageCard = `
+                        <div class="card" data-id="${doc.id}">
+                            <div class="card-header">
+                                <h3>${pkg.name}</h3>
+                                <div class="price">${pkg.price}</div>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Duration:</strong> ${pkg.duration}</p>
+                                <p><strong>Type:</strong> ${pkg.type}</p>
+                                <ul>
+                                    ${features}
+                                </ul>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-warning edit-package"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn btn-danger delete-package"><i class="fas fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    packagesGrid.innerHTML += packageCard;
+                });
+                
+                // Add event listeners for edit and delete buttons
+                document.querySelectorAll('.edit-package').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const card = e.target.closest('.card');
+                        const packageId = card.dataset.id;
+                        editPackage(packageId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-package').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const card = e.target.closest('.card');
+                        const packageId = card.dataset.id;
+                        deletePackage(packageId);
+                    });
+                });
+            }).catch(error => {
+                console.error("Error loading packages: ", error);
+                showToast("Failed to load packages. Please try again later.", "error");
+            });
+        }
+
+        // Load merchandise from Firebase
+        function loadMerchandise() {
+            db.collection("merchandise").get().then(querySnapshot => {
+                merchGrid.innerHTML = '';
+                
+                if (querySnapshot.empty) {
+                    merchGrid.innerHTML = '<p>No merchandise found.</p>';
+                    return;
+                }
+                
+                querySnapshot.forEach(doc => {
+                    const merch = doc.data();
+                    
+                    const merchCard = `
+                        <div class="merch-card" data-id="${doc.id}">
+                            <div class="merch-image">
+                                <img src="${merch.image || 'https://via.placeholder.com/300x200?text=Merch+Image'}" alt="${merch.name}">
+                            </div>
+                            <div class="merch-info">
+                                <div class="merch-title">${merch.name}</div>
+                                <div class="merch-price">${merch.price}</div>
+                                <p>${merch.description}</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-warning edit-merch"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn btn-danger delete-merch"><i class="fas fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    merchGrid.innerHTML += merchCard;
+                });
+                
+                // Add event listeners for edit and delete buttons
+                document.querySelectorAll('.edit-merch').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const card = e.target.closest('.merch-card');
+                        const merchId = card.dataset.id;
+                        editMerch(merchId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-merch').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const card = e.target.closest('.merch-card');
+                        const merchId = card.dataset.id;
+                        deleteMerch(merchId);
+                    });
+                });
+            }).catch(error => {
+                console.error("Error loading merchandise: ", error);
+                showToast("Failed to load merchandise. Please try again later.", "error");
+            });
+        }
+
+        // Load businesses from Firebase
+        function loadBusinesses() {
+            db.collection("businesses").get().then(querySnapshot => {
+                businessesGrid.innerHTML = '';
+                
+                if (querySnapshot.empty) {
+                    businessesGrid.innerHTML = '<p>No businesses found.</p>';
+                    return;
+                }
+                
+                querySnapshot.forEach(doc => {
+                    const business = doc.data();
+                    
+                    const businessCard = `
+                        <div class="card" data-id="${doc.id}">
+                            <div class="card-header">
+                                <h3>${business.name}</h3>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Category:</strong> ${business.category}</p>
+                                <p><strong>Featured Until:</strong> ${business.featuredUntil}</p>
+                                <p>${business.description}</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-warning"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    businessesGrid.innerHTML += businessCard;
+                });
+            }).catch(error => {
+                console.error("Error loading businesses: ", error);
+                showToast("Failed to load businesses. Please try again later.", "error");
+            });
+        }
+
+        // Load services from Firebase
+        function loadServices() {
+            db.collection("services").get().then(querySnapshot => {
+                servicesGrid.innerHTML = '';
+                
+                if (querySnapshot.empty) {
+                    servicesGrid.innerHTML = '<p>No services found.</p>';
+                    return;
+                }
+                
+                querySnapshot.forEach(doc => {
+                    const service = doc.data();
+                    const features = service.features ? service.features.split('\n').map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('') : '';
+                    
+                    const serviceCard = `
+                        <div class="card" data-id="${doc.id}">
+                            <div class="card-header">
+                                <h3>${service.name}</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>${service.description}</p>
+                                <ul>
+                                    ${features}
+                                </ul>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-warning"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    servicesGrid.innerHTML += serviceCard;
+                });
+            }).catch(error => {
+                console.error("Error loading services: ", error);
+                showToast("Failed to load services. Please try again later.", "error");
+            });
+        }
+
+        // Load initiated events from Firebase
+        function loadInitiatedEvents() {
+            db.collection("initiatedEvents").get().then(querySnapshot => {
+                initiatedEventsGrid.innerHTML = '';
+                
+                if (querySnapshot.empty) {
+                    initiatedEventsGrid.innerHTML = '<p>No initiated events found.</p>';
+                    return;
+                }
+                
+                querySnapshot.forEach(doc => {
+                    const event = doc.data();
+                    
+                    const eventCard = `
+                        <div class="card" data-id="${doc.id}">
+                            <div class="card-header">
+                                <h3>${event.title}</h3>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Date:</strong> ${event.date}</p>
+                                <p><strong>Location:</strong> ${event.location}</p>
+                                <p>${event.description}</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-warning"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn"><i class="fas fa-users"></i> Attendees</button>
+                            </div>
+                        </div>
+                    `;
+                    initiatedEventsGrid.innerHTML += eventCard;
+                });
+            }).catch(error => {
+                console.error("Error loading initiated events: ", error);
+                showToast("Failed to load initiated events. Please try again later.", "error");
+            });
+        }
+
         // Edit event
         function editEvent(eventId) {
             db.collection("events").doc(eventId).get().then(doc => {
@@ -993,6 +1545,55 @@
             }).catch(error => {
                 console.error("Error loading event: ", error);
                 showToast("Failed to load event details. Please try again.", "error");
+            });
+        }
+
+        // Edit package
+        function editPackage(packageId) {
+            db.collection("packages").doc(packageId).get().then(doc => {
+                if (doc.exists) {
+                    const pkg = doc.data();
+                    document.getElementById('packageName').value = pkg.name;
+                    document.getElementById('packagePrice').value = pkg.price;
+                    document.getElementById('packageDuration').value = pkg.duration;
+                    document.getElementById('packageType').value = pkg.type;
+                    document.getElementById('packageDescription').value = pkg.description;
+                    document.getElementById('packageFeatures').value = pkg.features || '';
+                    document.getElementById('packageId').value = packageId;
+                    
+                    packageFormContainer.style.display = 'block';
+                    editingPackageId = packageId;
+                    
+                    // Scroll to form
+                    packageForm.scrollIntoView({ behavior: 'smooth' });
+                }
+            }).catch(error => {
+                console.error("Error loading package: ", error);
+                showToast("Failed to load package details. Please try again.", "error");
+            });
+        }
+
+        // Edit merchandise
+        function editMerch(merchId) {
+            db.collection("merchandise").doc(merchId).get().then(doc => {
+                if (doc.exists) {
+                    const merch = doc.data();
+                    document.getElementById('merchName').value = merch.name;
+                    document.getElementById('merchPrice').value = merch.price;
+                    document.getElementById('merchImage').value = merch.image || '';
+                    document.getElementById('merchCategory').value = merch.category || 'clothing';
+                    document.getElementById('merchDescription').value = merch.description;
+                    document.getElementById('merchId').value = merchId;
+                    
+                    merchFormContainer.style.display = 'block';
+                    editingMerchId = merchId;
+                    
+                    // Scroll to form
+                    merchForm.scrollIntoView({ behavior: 'smooth' });
+                }
+            }).catch(error => {
+                console.error("Error loading merchandise: ", error);
+                showToast("Failed to load merchandise details. Please try again.", "error");
             });
         }
 
@@ -1020,6 +1621,32 @@
                 }).catch(error => {
                     console.error("Error deleting booking: ", error);
                     showToast("Failed to delete booking. Please try again.", "error");
+                });
+            }
+        }
+
+        // Delete package
+        function deletePackage(packageId) {
+            if (confirm('Are you sure you want to delete this package?')) {
+                db.collection("packages").doc(packageId).delete().then(() => {
+                    showToast("Package deleted successfully!", "success");
+                    loadPackages();
+                }).catch(error => {
+                    console.error("Error deleting package: ", error);
+                    showToast("Failed to delete package. Please try again.", "error");
+                });
+            }
+        }
+
+        // Delete merchandise
+        function deleteMerch(merchId) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                db.collection("merchandise").doc(merchId).delete().then(() => {
+                    showToast("Product deleted successfully!", "success");
+                    loadMerchandise();
+                }).catch(error => {
+                    console.error("Error deleting product: ", error);
+                    showToast("Failed to delete product. Please try again.", "error");
                 });
             }
         }
@@ -1063,12 +1690,101 @@
             }
         }
 
+        // Save package (create or update)
+        function savePackage(e) {
+            e.preventDefault();
+            
+            const packageData = {
+                name: document.getElementById('packageName').value,
+                price: document.getElementById('packagePrice').value,
+                duration: document.getElementById('packageDuration').value,
+                type: document.getElementById('packageType').value,
+                description: document.getElementById('packageDescription').value,
+                features: document.getElementById('packageFeatures').value,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            
+            if (editingPackageId) {
+                // Update existing package
+                db.collection("packages").doc(editingPackageId).update(packageData).then(() => {
+                    showToast("Package updated successfully!", "success");
+                    resetPackageForm();
+                    loadPackages();
+                }).catch(error => {
+                    console.error("Error updating package: ", error);
+                    showToast("Failed to update package. Please try again.", "error");
+                });
+            } else {
+                // Create new package
+                db.collection("packages").add(packageData).then(() => {
+                    showToast("Package created successfully!", "success");
+                    resetPackageForm();
+                    loadPackages();
+                }).catch(error => {
+                    console.error("Error creating package: ", error);
+                    showToast("Failed to create package. Please try again.", "error");
+                });
+            }
+        }
+
+        // Save merchandise (create or update)
+        function saveMerch(e) {
+            e.preventDefault();
+            
+            const merchData = {
+                name: document.getElementById('merchName').value,
+                price: document.getElementById('merchPrice').value,
+                image: document.getElementById('merchImage').value || '',
+                category: document.getElementById('merchCategory').value,
+                description: document.getElementById('merchDescription').value,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            
+            if (editingMerchId) {
+                // Update existing merchandise
+                db.collection("merchandise").doc(editingMerchId).update(merchData).then(() => {
+                    showToast("Product updated successfully!", "success");
+                    resetMerchForm();
+                    loadMerchandise();
+                }).catch(error => {
+                    console.error("Error updating product: ", error);
+                    showToast("Failed to update product. Please try again.", "error");
+                });
+            } else {
+                // Create new merchandise
+                db.collection("merchandise").add(merchData).then(() => {
+                    showToast("Product created successfully!", "success");
+                    resetMerchForm();
+                    loadMerchandise();
+                }).catch(error => {
+                    console.error("Error creating product: ", error);
+                    showToast("Failed to create product. Please try again.", "error");
+                });
+            }
+        }
+
         // Reset event form
         function resetEventForm() {
             eventForm.reset();
             document.getElementById('eventId').value = '';
             eventFormContainer.style.display = 'none';
             editingEventId = null;
+        }
+
+        // Reset package form
+        function resetPackageForm() {
+            packageForm.reset();
+            document.getElementById('packageId').value = '';
+            packageFormContainer.style.display = 'none';
+            editingPackageId = null;
+        }
+
+        // Reset merchandise form
+        function resetMerchForm() {
+            merchForm.reset();
+            document.getElementById('merchId').value = '';
+            merchFormContainer.style.display = 'none';
+            editingMerchId = null;
         }
 
         // Update dashboard stats
@@ -1112,11 +1828,28 @@
         // Event listeners
         logoutBtn.addEventListener('click', logout);
         eventForm.addEventListener('submit', saveEvent);
+        packageForm.addEventListener('submit', savePackage);
+        merchForm.addEventListener('submit', saveMerch);
+        
         addEventBtn.addEventListener('click', () => {
             resetEventForm();
             eventFormContainer.style.display = 'block';
         });
+        
+        addPackageBtn.addEventListener('click', () => {
+            resetPackageForm();
+            packageFormContainer.style.display = 'block';
+        });
+        
+        addMerchBtn.addEventListener('click', () => {
+            resetMerchForm();
+            merchFormContainer.style.display = 'block';
+        });
+        
         cancelEventBtn.addEventListener('click', resetEventForm);
+        cancelPackageBtn.addEventListener('click', resetPackageForm);
+        cancelMerchBtn.addEventListener('click', resetMerchForm);
+        
         mobileMenuBtn.addEventListener('click', () => {
             sidebar.classList.toggle('active');
         });
@@ -1142,6 +1875,22 @@
                 });
                 document.getElementById(target).classList.add('active');
             });
+        });
+
+        // Quick action buttons
+        document.querySelectorAll('[data-target]').forEach(button => {
+            if (button.tagName === 'BUTTON') {
+                button.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                    document.querySelector(`.nav-links a[data-target="${target}"]`).classList.add('active');
+                    
+                    document.querySelectorAll('.content-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById(target).classList.add('active');
+                });
+            }
         });
 
         // Initialize the app
